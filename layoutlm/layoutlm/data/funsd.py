@@ -1,5 +1,6 @@
 import logging
 import os
+import numpy as np
 
 import torch
 from torch.utils.data import Dataset
@@ -117,7 +118,8 @@ class InputFeatures(object):
         page_size,
     ):
         assert (
-            0 <= all(boxes) <= 1000
+            np.array(boxes).max() <= 1000
+            and np.array(boxes).min() >= 0
         ), "Error with input bbox ({}): the coordinate value is not between 0 and 1000".format(
             boxes
         )
